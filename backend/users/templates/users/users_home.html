@@ -9,7 +9,8 @@
     <h2>  Users Create New Account Page</h2>
     <div> 
         <form method="POST" >
-            {{ form }}
+            {% csrf_token %} 
+            {{ user_form }}
             <button type="submit">Create New Account </button>
         </form>
     </div>

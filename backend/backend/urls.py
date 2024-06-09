@@ -17,17 +17,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
+from users import views as users_app_views
+
 urlpatterns = [
     # This is the URL for the "website" app
     path("", include("website.urls")),
 
+    # This is the URL for the "users" app
+    path("users/", users_app_views.users, name="users"),
+
     path("admin/", admin.site.urls),
 
-    # This is a URL for the django debug_toolbar app 
+    # This is a URL for the django debug_toolbar app
     path("__debug__/", include("debug_toolbar.urls")),
 
 
- 
+
+
+
 
 
 
