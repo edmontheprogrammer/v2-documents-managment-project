@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
+    # The Django built-in application for controling login, logout in Django 
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -40,6 +41,9 @@ INSTALLED_APPS = [
 
     # Installed 3rd party apps by Edmon
     "debug_toolbar",
+    # cripsy-form is used to improve the UI of the form
+    "crispy_forms",
+    "crispy_tailwind",
 
     # Created Apps by Edmon. 
     # The default website for the project 
@@ -162,3 +166,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+
+# Telling Django to use the crispy form template for tailwind-css library
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"

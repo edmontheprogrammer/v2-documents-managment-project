@@ -11,6 +11,7 @@ django = "^5.0.6"
 devtool = "^0.0.2"
 psycopg2 = "^2.9.9"
 django-debug-toolbar = "^4.4.2"
+crispy-tailwind = "^1.0.3"
 
 
 [build-system]

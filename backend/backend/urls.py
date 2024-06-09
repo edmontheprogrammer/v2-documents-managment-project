@@ -21,11 +21,28 @@ from django.urls import path, include
 from users import views as users_app_views
 
 urlpatterns = [
+    # the URLs for "login", "logout" for Django's 
+    #  "django.contrib.auth", app that comes with Django
+    # Note 1: Create the HTML pages (HTML templates) for the 
+    # "login" and "logout" pages in the "users" app and then add the 
+    # "login" and "logout" authentication logics in these pages to accept
+    # user's credentials into the site.  
+    # Note 2: Make sure the URLs for the "login", "logout" templates are 
+    # within a directory called "registration". "registration" is a special 
+    # folder that django looks for when trying to find
+    # the  HTML pages (HTML templates) for the "login" and "logout" pages. 
+    path("",  include("django.contrib.auth.urls")),
+
     # This is the URL for the "website" app
     path("", include("website.urls")),
 
+
+
     # This is the URL for the "users" app
     path("users/", users_app_views.users, name="users"),
+    
+  
+    
 
     path("admin/", admin.site.urls),
 

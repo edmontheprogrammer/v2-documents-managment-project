@@ -1,0 +1,12 @@
+{% extends "website/base.html" %} {% load crispy_forms_tags %} 
+{% block content %}
+<div>
+  <h1>Documents Managment Project</h1>
+  <h3>Login Here</h3>
+</div>
+<form method="post">
+  {% csrf_token %} {{ form|crispy }}
+  <button type="submit">Login</button>
+  <p>Don't have an Account? Create one <a href="/users"> here</a></p>
+</form>
+{% endblock %}
