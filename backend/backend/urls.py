@@ -18,10 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # This is the URL for the "website" app
+    path("", include("website.urls")),
+
     path("admin/", admin.site.urls),
 
-    # This is a URL for the django debug_toolbar
+    # This is a URL for the django debug_toolbar app 
     path("__debug__/", include("debug_toolbar.urls")),
+
+
+ 
+
 
 
 
