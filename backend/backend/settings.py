@@ -41,8 +41,12 @@ INSTALLED_APPS = [
     # Installed 3rd party apps by Edmon
     "debug_toolbar",
 
-    # Created Apps by Edmon
+    # Created Apps by Edmon. 
+    # The default website for the project 
     "website",
+    # "users"; the app that will handle users' sign-in, sign-up, registeration 
+    # and creating new accounts on the website
+    "users", 
 ]
 
 MIDDLEWARE = [
