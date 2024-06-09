@@ -15,6 +15,11 @@ from django.contrib.auth import login, authenticate
 from .forms import CustomUserObjectForm 
 
 # Create your views here.
+# 
+# Note 1: "request.user":
+# "request.user" is a function call that gives us access to the "User" object in 
+# code ... if you have to modify and get access to the user attributes 
+# programmatically.  
 
 
 def users(request):

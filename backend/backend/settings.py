@@ -32,8 +32,20 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
-    # The Django built-in application for controling login, logout in Django 
+    # The Django built-in application for controling login, logout in Django
+    # it authenticate users for us
+    # List of all the built-in URLs from Django's auth app:
+    # 0. admin/
+    # 1. login/ [name='login']
+    # 2. logout/ [name='logout']
+    # 3. password_change/ [name='password_change']
+    # 4. password_change/done/ [name='password_change_done']
+    # 5. password_reset/ [name='password_reset']
+    # 6. password_reset/done/ [name='password_reset_done']
+    # 7. reset/<uidb64>/<token>/ [name='password_reset_confirm']
+    # 8. reset/done/ [name='password_reset_complete']
     "django.contrib.auth",
+    
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -45,12 +57,12 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_tailwind",
 
-    # Created Apps by Edmon. 
-    # The default website for the project 
+    # Created Apps by Edmon.
+    # The default website for the project
     "website",
-    # "users"; the app that will handle users' sign-in, sign-up, registeration 
+    # "users"; the app that will handle users' sign-in, sign-up, registeration
     # and creating new accounts on the website
-    "users", 
+    "users",  # This is the "Sign Up Page" for creating new user accounts
 ]
 
 MIDDLEWARE = [
@@ -72,7 +84,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -171,3 +183,9 @@ INTERNAL_IPS = [
 # Telling Django to use the crispy form template for tailwind-css library
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+
+# These are the custom login and logout redirects for
+# users accounts.
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
