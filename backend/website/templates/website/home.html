@@ -3,8 +3,9 @@
 {% block content %} 
 {% if user.is_authenticated %} 
 Hi {{ user.username }}
-
-<!-- This is adding the log out button to the home page -->
+{% comment %} This is adding the 'change password' link in the home page {% endcomment %}
+<p><a href="{% url 'password_change' %}">Password Change</a></p>
+{% comment %} <!-- This is adding the log out button to the home page --> {% endcomment %}
 <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
   <button type="submit">Log Out</button>
@@ -14,5 +15,7 @@ Hi {{ user.username }}
 <h3>We have the best documents solution for you!</h3>
 <h3>Learn more ...</h3>
 <p>You are not logged in</p>
-<p> Login <a href="{%  url 'login' %}">Here</a> </p>
+ {% comment %} This is adding a link to the password reset page in the home page  {% endcomment %}
+ <p><a href="{% url 'password_reset' %}">Password Reset</a></p>
+ <p> Login <a href="{%  url 'login' %}">Here</a> </p>
 {% endif %} {% endblock %}
