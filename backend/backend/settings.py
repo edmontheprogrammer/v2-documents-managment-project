@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -185,7 +186,183 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 
-# These are the custom login and logout redirects for
-# users accounts.
+
+AUTHENTICATION_BACKENDS = [
+
+    # Log using the built-in Django
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # Login Using Things like Email address, Gmail Account, Facebook Account, Github Account, and Others
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
+# Django defaults to an SMTP email backend that requires some configuration. 
+# To test the password reset flow locally, we can update the django_project/settings.py 
+# file to output emails to the console instead. Add this one line to the bottom of the file.
+# 
+# django_project/settings.py
+# 
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # new
+# Finally, we can try the Password Reset page again at
+#  http://127.0.0.1:8000/accounts/password_reset/. 
+# Enter the email address for your regular user account and click the 
+# "Change My Password" button. It will redirect you to the password reset sent page.
+# 
+#
+# For security reasons, Django will not provide any notification whether you 
+# entered an email that exists in the database or not.
+#  But if you look in your terminal/console now, 
+# you can see the contents of the email outputted there.
+#
+# Content-Type: text/plain; charset= "utf-8"
+# MIME-Version: 1.0
+# Content-Transfer-Encoding: 8bit
+# Subject: Password reset on 127.0.0.1:8000
+# From: webmaster@localhost
+# To: testuser@email.com
+# Date: Fri, 26 Jan 2024 20:04:32 -0000
+# Message-ID: <170629947287.95157.11297370611002899863@1.0.0.127.in-addr.arpa>
+#
+#
+# You're receiving this email because you requested a password reset for your 
+# user account at 127.0.0.1:8000.
+#
+# Please go to the following page and choose a new password:
+#
+# http://127.0.0.1:8000/accounts/reset/Mg/c1fefk-40c35272edd84fcb73f64d2b4ebd0e8f/
+#
+# Your username, in case you've forgotten: testuser
+#
+# Thanks for using our site!
+#
+# The 127.0.0.1:8000 team
+#
+# 
+#
+# -------------------------------------------------------------------------------
+# Copy the unique URL from your console into your web browser. 
+# It will cryptographically confirm your identity and take you to the
+# Password Reset Confirmation page at http://127.0.0.1:8000/accounts/reset/Mg/set-password/.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# "ACCOUNT_AUTHENTICATION_METHOD" (="username" | "email" | "username_email")
+# Specifices the login method to use - whether the user logs in by entering their username, e-mail address,
+# or either one of both. Setting this to "email" requires ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+
+
+# This setting confirms the User's email account as soon as the user clicks the link on the email address
+# thier acccount is confirmed.
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+
+# This allows users to sign up using their email account
+ACCOUNT_EMAIL_REQUIRED = True
+
+# Account email verification: This option can be used to set whether an email verification
+# is necessary for a user to log in after he registers an account. You can use ‘mandatory’
+# to block a user from logging in until the email gets verified. You can set options
+# for sending the email but allowing the user to log in without an email.
+# You can also set none to send no verification email. (Not Recommended)
+# Determines the e-mail verificaiton method during signup - choose one of
+# "mandatory", "optional" or "none"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+
+# Email confirmation expiry: Sets the number of days within which 
+# an account should be activated.
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+
+
+# Login Attempt Limit: This is an important feature which can be used to prevent
+# brute force attacks on the user login page on your website.
+# The maximum number of login attempts can be set,
+# and the user gets blocked from logging back in until a timeout.
+# This feature makes use of ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT setting.
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+
+# The default behavior is not log users in and to redirect them to
+# "ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL".
+# By changing this setting to "True", users will automatically be logged in once they
+# confirm their email address. 
+# Note, however that this only works when confirming the email
+# address "immediately after signing up", assuming users didn't close their browser or used some sort of
+# private browsing mode.
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# ACCOUNTLOGOUT_ON_GET ; determines whether or not the user is 
+# automatically logged out by a GET request
+# GET is not designed to modify the server state, and in this case it can be dangerous.
+ACCOUNT_LOGOUT_ON_GET = True
+
+# ACCOUNT_LOGIN_ON_PASSWORD_RESET (False)
+# By changing this setting to "True", users will automatically be logged in once they have reset their
+# password. By default their are redirected to the password reset done page.
+# Note 3: It is better to leave this setting to "False" or on default setting because we want
+# to check and make sure the user's new password works and they can access the website once they change
+# to new password or once they reset their password.
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
+
+
+# Login and Logout URL redirection: When user logs in or logs out,
+# you might want to redirect the user to a particular URL or page and
+# the below settings can be used to set that URL.
+# By default, allauth redirects login to /accounts/profile/ URL
+# and logout to the localhost:8000 or any localhost homepage.
+
+# These are the default login and logout redirects for allauths.
+# ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
+# LOGIN_REDIRECT_URL = '/accounts/email/'
+
+# These are the custom login and logout redirects for allauths for
+# managming users accounts.
 LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+
+
+# ACCOUNT_PRESERVE_USERNAME_CASING = False
+# This setting determines whether the username is stored in lowercase (False)
+#  or whether it its casing
+# to be preserved (True).
+# Note 1: Setting this to "False" allows us to have Users' username in all lowercase letters.
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+
+
+# ACCOUNT_SESSION_REMEMBER = False
+# Controls the life time of the session. Set to "None" to ask the user ("Remember me?"),
+# "False" to not remember, and "True" to always remember
+ACCOUNT_SESSION_REMEMBER = False
+
+
+# ACCOUNT_USERNAME_BLACKLIST (=[])
+# "ACCOUNT_USERNAME_BLACKLIST" is a list of usernames that can't be used by users on the website
+# or portal web app
+ACCOUNT_USERNAME_BLACKLIST = [
+    "edmon",
+    "edmontheprogrammer",
+    "god",
+    "admin",
+    "administrator",
+    "superuser",
+    "createsuperuser"]
+
+# ACCOUNT_USERNAME_MIN_LENGTH (=1)
+# An integer specifying the minimum allowed length of a username
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+
+# Login Attempt Limit timeout: This setting should be used with
+# setting ACCOUNT_LOGIN_ATTEMPTS_LIMIT . The value set is in seconds from the last
+# unsuccessful login attempt. Please note that this does not protect admin login.
+
+# ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
+
+# Sets the ID of your site's URL.
+# The Django Project or Django Framework can have multiple websites.
+# "SITE_ID" is the unique identifier for each web app or each website that you create.
+# "SITE_ID" is the the primary key for each Django web app you create.
+# This line identifies the "portal" web app with a site id of 1 "SITE_ID = 1"
+SITE_ID = 1
