@@ -1,0 +1,20 @@
+{% extends "website/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="login-page"> 
+<h1>Log In Page</h1>
+<h1> users app</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit">Log In</button>
+  <!--
+    This is the URL link that will direct users that don't have accounts 
+    to Create a new account using the "users" app by going to the "users" app 
+    home page. 
+  -->
+  <p> Don't have an account? Create one <a href="{% url 'users' %}"> Create New Account</p>
+</form>
+</div>
+{% endblock %}

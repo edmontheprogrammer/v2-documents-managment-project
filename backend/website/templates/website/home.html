@@ -1,0 +1,32 @@
+{% extends 'website/base.html' %} 
+{% load crispy_forms_tags %} 
+{% block content %} 
+<div class="home-page"> 
+{% if user.is_authenticated %} 
+Hi {{ user.username }} 
+<p>Welcome! you have successfully logged in. </p>
+{% comment %} This is adding the 'change password' link in the home page {% endcomment %}
+<p><a href="{% url 'password_change' %}">Password Change</a></p>
+{% comment %} <!-- This is adding the log out button to the home page --> {% endcomment %}
+<form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Log Out</button>
+</form>
+{% else %}
+<h1>Welcome to the Documents Managment App Home page</h1>
+<h1> website app</h1>
+<h3>We have the best documents solution for you!</h3>
+<h3>Learn more ...</h3>
+<p>You are not logged in</p>
+ <p> Login <a href="{%  url 'login' %}">Here</a> </p>
+   <!--
+    This is the URL link that will direct users that don't have accounts 
+    to Create a new account using the "users" app by going to the "users" app 
+    home page. 
+  -->
+  {% comment %} This is adding a link to the password reset page in the home page  {% endcomment %}
+ <p><a href="{% url 'password_reset' %}">Password Reset</a></p>
+<p> Don't have an account? Create one <a href="{% url 'users' %}"> Create New Account</p>
+</div>
+{% endif %}
+{% endblock %}
