@@ -2,7 +2,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h2>Log In Page</h2>
+<div class="login-page"> 
+<h1>Log In Page</h1>
+<h1> users app</h1>
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
@@ -14,4 +16,5 @@
   -->
   <p> Don't have an account? Create one <a href="{% url 'users' %}"> Create New Account</p>
 </form>
+</div>
 {% endblock %}
